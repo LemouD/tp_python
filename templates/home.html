@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        .device {
+            margin: 10px auto;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<h1>Bienvenue</h1>
+<button onclick="window.location.reload(false)">Scan</button>
+<h4>Dernier périphérique(s) scanné(s)</h4>
+{% for d in devices %}
+    <div id="device-{{ loop.index }}" class="device">
+        <div>Adresse MAC: {{ d.mac_address }}</div>
+        <div>Nom: {{ d.name }}</div>
+        <div>RSSI: {{ d.rssi }}</div>
+        <div>Date du scan: {{ d.date_scan }}</div>
+    </div>
+{% endfor %}
+</body>
+</html>
