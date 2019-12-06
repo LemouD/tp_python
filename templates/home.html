@@ -1,25 +1,67 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+
 <html>
+
 <head>
-    <title></title>
-    <style>
-        .device {
-            margin: 10px auto;
-            border: 1px solid black;
-        }
-    </style>
+    <title>Bluetooth Scan</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+
+
+    <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
 </head>
+
 <body>
-<h1>Bienvenue</h1>
-<button onclick="window.location.reload(false)">Scan</button>
-<h4>Dernier périphérique(s) scanné(s)</h4>
-{% for d in devices %}
-    <div id="device-{{ loop.index }}" class="device">
-        <div>Adresse MAC: {{ d.mac_address }}</div>
-        <div>Nom: {{ d.name }}</div>
-        <div>RSSI: {{ d.rssi }}</div>
-        <div>Date du scan: {{ d.date_scan }}</div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="inner">
+            <a href="index.html" class="logo">Bienvenue sur Bluetooth Scan</a>
+            <nav id="nav">
+                <a href="index.html">Home</a>
+
+            </nav>
+        </div>
+    </header>
+    <a href="#menu" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+
+
+    <h1>Bienvenue</h1>
+    <button onclick="window.location.reload(false)">Scan</button>
+
+
+    <div class="inner">
+        <header>
+
+            <h3>Dernier périphérique(s) scanné(s)</h3>
+        </header>
+
+
+
     </div>
-{% endfor %}
+
+
+    <!-- One -->
+    <section id="one">
+        {% for d in devices %}
+        <div id="device-{{ loop.index }}" class="inner">
+            <header>
+                <h2>Adresse MAC: {{ d.mac_address }}</h2>
+            </header>
+            <p> Nom: {{ d.name }}<br>RSSI: {{ d.rssi }}<br>Date du scan: {{ d.date_scan }}
+            </p>
+            {% endfor %}
+
+        </div>
+    </section>
+
+
+
+
+
+
+    <!-- Scripts -->
+
+
 </body>
+
 </html>
