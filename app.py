@@ -1,11 +1,22 @@
 from flask import Flask, request, render_template, redirect, url_for
 import json
+from orm import sessionmaker, Device
+from sqlalchemy import create_engine
+
 
 app = Flask(__name__)
+app.debug
+
+engine = create_engine('sqlite:///epydeble.db')
+session = sessionmaker()
+session.configure(bind=engine)
 
 @app.route('/')
 def home():
-  return 'Bienvenue !'
+  s = session()
+  last_device = s.query(Device).order_by(Device.date_scan.desc()).first()
+  last_devices = s.query(Device).filter(Device.date_scan == last_device.date_scan)
+  return render_template("home.html", devices = last_devices)
 
 @app.route('/devices', methods=['GET'])
 def devices():
