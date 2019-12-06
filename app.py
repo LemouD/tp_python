@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, redirect, url_for
 import json
 from orm import sessionmaker, Device
 from sqlalchemy import create_engine
+from scan_url import scan_url
 
 
 app = Flask(__name__)
@@ -12,6 +13,7 @@ session = sessionmaker()
 session.configure(bind=engine)
 
 @app.route('/')
+@app.route('/home.html')
 def home():
   s = session()
   last_device = s.query(Device).order_by(Device.date_scan.desc()).first()
@@ -22,6 +24,18 @@ def home():
 def devices():
   devices = parse_from_json()
   return render_template("devices.html", devices=devices)
+
+@app.route('/all_devices', methods=['GET'])
+def all_devices():
+  s = session()
+  devices =  s.query(Device).all()
+  return render_template("devices.html", devices=devices)
+
+@app.route('/scan_url')
+def scan_url():
+  scan_url()
+  return redirect(url_for('home'))
+
 
 def parse_from_json():
   devices = []
